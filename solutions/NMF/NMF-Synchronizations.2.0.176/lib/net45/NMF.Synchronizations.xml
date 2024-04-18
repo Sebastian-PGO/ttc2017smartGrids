@@ -1,0 +1,1604 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>NMF.Synchronizations</name>
+    </assembly>
+    <members>
+        <member name="T:NMF.Synchronizations.GuardedSynchronizationJob`2">
+            <summary>
+            Denotes the base class for a synchronization job that is filtered by a guard
+            </summary>
+            <typeparam name="TLeft">The LHS type of the guard</typeparam>
+            <typeparam name="TRight">The RHS type of the guard</typeparam>
+        </member>
+        <member name="M:NMF.Synchronizations.GuardedSynchronizationJob`2.#ctor(NMF.Synchronizations.ISynchronizationJob{`0,`1})">
+            <summary>
+            Creates a new guarded synchronization job
+            </summary>
+            <param name="inner">The inner synchronization job</param>
+        </member>
+        <member name="P:NMF.Synchronizations.GuardedSynchronizationJob`2.IsEarly">
+            <inheritdoc />
+        </member>
+        <member name="M:NMF.Synchronizations.GuardedSynchronizationJob`2.Perform(NMF.Synchronizations.SynchronizationComputation{`0,`1},NMF.Synchronizations.SynchronizationDirection,NMF.Synchronizations.ISynchronizationContext)">
+            <inheritdoc />
+        </member>
+        <member name="M:NMF.Synchronizations.GuardedSynchronizationJob`2.CreateTracker(NMF.Synchronizations.SynchronizationComputation{`0,`1})">
+            <summary>
+            Creates a tracker for the given computation
+            </summary>
+            <param name="computation">The computation that shall be tracked</param>
+            <returns></returns>
+        </member>
+        <member name="T:NMF.Synchronizations.BothGuardedSynchronizationJob`2">
+            <summary>
+            Denotes a class that represents a synchronization job guarded at both LHS and RHS
+            </summary>
+            <typeparam name="TLeft">The LHS type</typeparam>
+            <typeparam name="TRight">The RHS type</typeparam>
+        </member>
+        <member name="M:NMF.Synchronizations.BothGuardedSynchronizationJob`2.#ctor(NMF.Synchronizations.ISynchronizationJob{`0,`1},NMF.Expressions.ObservingFunc{`0,`1,System.Boolean})">
+            <summary>
+            Creates a new guarded synchronization job
+            </summary>
+            <param name="inner">The inner synchronization job</param>
+            <param name="guard">The actual guard</param>
+        </member>
+        <member name="M:NMF.Synchronizations.BothGuardedSynchronizationJob`2.CreateTracker(NMF.Synchronizations.SynchronizationComputation{`0,`1})">
+            <inheritdoc />
+        </member>
+        <member name="T:NMF.Synchronizations.RightGuardedSynchronizationJob`2">
+            <summary>
+            Denotes a synchronization job that is guarded at the RHS
+            </summary>
+            <typeparam name="TLeft">The LHS type</typeparam>
+            <typeparam name="TRight">The RHS type</typeparam>
+        </member>
+        <member name="M:NMF.Synchronizations.RightGuardedSynchronizationJob`2.#ctor(NMF.Synchronizations.ISynchronizationJob{`0,`1},NMF.Expressions.ObservingFunc{`1,System.Boolean})">
+            <summary>
+            Creates a new synchronization job guarded at the RHS
+            </summary>
+            <param name="inner"></param>
+            <param name="guard"></param>
+        </member>
+        <member name="M:NMF.Synchronizations.RightGuardedSynchronizationJob`2.CreateTracker(NMF.Synchronizations.SynchronizationComputation{`0,`1})">
+            <inheritdoc />
+        </member>
+        <member name="T:NMF.Synchronizations.LeftGuardedSynchronizationJob`2">
+            <summary>
+            Denotes a synchronization job guarded at the LHS
+            </summary>
+            <typeparam name="TLeft">The LHS type</typeparam>
+            <typeparam name="TRight">The RHS type</typeparam>
+        </member>
+        <member name="M:NMF.Synchronizations.LeftGuardedSynchronizationJob`2.#ctor(NMF.Synchronizations.ISynchronizationJob{`0,`1},NMF.Expressions.ObservingFunc{`0,System.Boolean})">
+            <summary>
+            Creates a new synchronization job guarded at the LHS
+            </summary>
+            <param name="inner">The inner synchronization job</param>
+            <param name="guard">The guard function</param>
+        </member>
+        <member name="M:NMF.Synchronizations.LeftGuardedSynchronizationJob`2.CreateTracker(NMF.Synchronizations.SynchronizationComputation{`0,`1})">
+            <inheritdoc />
+        </member>
+        <member name="T:NMF.Synchronizations.Inconsistencies.IInconsistency">
+            <summary>
+            Describes inconsistencies that can occur between the right hand and the left hand of a synchronization
+            </summary>
+        </member>
+        <member name="P:NMF.Synchronizations.Inconsistencies.IInconsistency.CanResolveLeft">
+            <summary>
+            Gets a value indicating whether the inconsistency can be automatically resolved modifying the left hand model only
+            </summary>
+        </member>
+        <member name="P:NMF.Synchronizations.Inconsistencies.IInconsistency.CanResolveRight">
+            <summary>
+            Gets a value indicating whether the inconsistency can be automatically resolved modifying the right hand model only
+            </summary>
+        </member>
+        <member name="M:NMF.Synchronizations.Inconsistencies.IInconsistency.ResolveLeft">
+            <summary>
+            Resolves the inconsistency modifying the left hand side model
+            </summary>
+        </member>
+        <member name="M:NMF.Synchronizations.Inconsistencies.IInconsistency.ResolveRight">
+            <summary>
+            Resolves the inconsistency modifying the right hand side model
+            </summary>
+        </member>
+        <member name="T:NMF.Synchronizations.Inconsistencies.IncrementalPropertyConsistencyCheck`1">
+            <summary>
+            Denotes an incrementally maintained inconsistency that a property has different values in LHS and RHS
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="P:NMF.Synchronizations.Inconsistencies.IncrementalPropertyConsistencyCheck`1.SourceLeft">
+            <summary>
+            Gets an incrementally maintained value for the LHS property value
+            </summary>
+        </member>
+        <member name="P:NMF.Synchronizations.Inconsistencies.IncrementalPropertyConsistencyCheck`1.SourceRight">
+            <summary>
+            Gets an incrementally maintained value for the RHS property value
+            </summary>
+        </member>
+        <member name="P:NMF.Synchronizations.Inconsistencies.IncrementalPropertyConsistencyCheck`1.Context">
+            <summary>
+            Gets the synchronization context in which the inconsistency was found
+            </summary>
+        </member>
+        <member name="P:NMF.Synchronizations.Inconsistencies.IncrementalPropertyConsistencyCheck`1.Representation">
+            <summary>
+            Gets a human-readable description of the inconsistency
+            </summary>
+        </member>
+        <member name="P:NMF.Synchronizations.Inconsistencies.IncrementalPropertyConsistencyCheck`1.CanResolveLeft">
+            <inheritdoc />
+        </member>
+        <member name="P:NMF.Synchronizations.Inconsistencies.IncrementalPropertyConsistencyCheck`1.CanResolveRight">
+            <inheritdoc />
+        </member>
+        <member name="M:NMF.Synchronizations.Inconsistencies.IncrementalPropertyConsistencyCheck`1.#ctor(NMF.Expressions.INotifyReversableValue{`0},NMF.Expressions.INotifyReversableValue{`0},NMF.Synchronizations.ISynchronizationContext)">
+            <summary>
+            Creates a new inconsistency
+            </summary>
+            <param name="source1">The LHS source</param>
+            <param name="source2">The RHS source</param>
+            <param name="context">The context in which the inconsistency arose</param>
+        </member>
+        <member name="M:NMF.Synchronizations.Inconsistencies.IncrementalPropertyConsistencyCheck`1.Dispose">
+            <inheritdoc />
+        </member>
+        <member name="M:NMF.Synchronizations.Inconsistencies.IncrementalPropertyConsistencyCheck`1.ResolveLeft">
+            <inheritdoc />
+        </member>
+        <member name="M:NMF.Synchronizations.Inconsistencies.IncrementalPropertyConsistencyCheck`1.ResolveRight">
+            <inheritdoc />
+        </member>
+        <member name="M:NMF.Synchronizations.Inconsistencies.IncrementalPropertyConsistencyCheck`1.GetHashCode">
+            <inheritdoc />
+        </member>
+        <member name="M:NMF.Synchronizations.Inconsistencies.IncrementalPropertyConsistencyCheck`1.Equals(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:NMF.Synchronizations.Inconsistencies.IncrementalPropertyConsistencyCheck`1.Equals(NMF.Synchronizations.Inconsistencies.IInconsistency)">
+            <inheritdoc />
+        </member>
+        <member name="M:NMF.Synchronizations.Inconsistencies.IncrementalPropertyConsistencyCheck`1.Equals(NMF.Synchronizations.Inconsistencies.IncrementalPropertyConsistencyCheck{`0})">
+            <inheritdoc />
+        </member>
+        <member name="M:NMF.Synchronizations.Inconsistencies.IncrementalPropertyConsistencyCheck`1.ToString">
+            <inheritdoc />
+        </member>
+        <member name="T:NMF.Synchronizations.Inconsistencies.IncrementalReferenceConsistencyCheck`4">
+            <summary>
+            Denotes an incrementally maintained inconsistency that a reference has different values in LHS and RHS
+            </summary>
+            <typeparam name="TLeft">The LHS context type</typeparam>
+            <typeparam name="TRight">The RHS context type</typeparam>
+            <typeparam name="TDepLeft">The LHS dependency type</typeparam>
+            <typeparam name="TDepRight">The RHS dependency type</typeparam>
+        </member>
+        <member name="P:NMF.Synchronizations.Inconsistencies.IncrementalReferenceConsistencyCheck`4.Left">
+            <summary>
+            Gets an incrementally maintained value of the LHS dependency
+            </summary>
+        </member>
+        <member name="P:NMF.Synchronizations.Inconsistencies.IncrementalReferenceConsistencyCheck`4.Right">
+            <summary>
+            Gets an incrementally maintained value of the RHS dependency
+            </summary>
+        </member>
+        <member name="P:NMF.Synchronizations.Inconsistencies.IncrementalReferenceConsistencyCheck`4.Computation">
+            <summary>
+            Gets the base correspondence on the basis of which the inconsistency was detected
+            </summary>
+        </member>
+        <member name="P:NMF.Synchronizations.Inconsistencies.IncrementalReferenceConsistencyCheck`4.CanResolveLeft">
+            <inheritdoc />
+        </member>
+        <member name="P:NMF.Synchronizations.Inconsistencies.IncrementalReferenceConsistencyCheck`4.CanResolveRight">
+            <inheritdoc />
+        </member>
+        <member name="M:NMF.Synchronizations.Inconsistencies.IncrementalReferenceConsistencyCheck`4.Dispose">
+            <inheritdoc />
+        </member>
+        <member name="M:NMF.Synchronizations.Inconsistencies.IncrementalReferenceConsistencyCheck`4.ResolveLeft">
+            <inheritdoc />
+        </member>
+        <member name="M:NMF.Synchronizations.Inconsistencies.IncrementalReferenceConsistencyCheck`4.ResolveRight">
+            <inheritdoc />
+        </member>
+        <member name="M:NMF.Synchronizations.Inconsistencies.IncrementalReferenceConsistencyCheck`4.GetHashCode">
+            <inheritdoc />
+        </member>
+        <member name="M:NMF.Synchronizations.Inconsistencies.IncrementalReferenceConsistencyCheck`4.Equals(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:NMF.Synchronizations.Inconsistencies.IncrementalReferenceConsistencyCheck`4.Equals(NMF.Synchronizations.Inconsistencies.IInconsistency)">
+            <inheritdoc />
+        </member>
+        <member name="M:NMF.Synchronizations.Inconsistencies.IncrementalReferenceConsistencyCheck`4.Equals(NMF.Synchronizations.Inconsistencies.IncrementalReferenceConsistencyCheck{`0,`1,`2,`3})">
+            <inheritdoc />
+        </member>
+        <member name="T:NMF.Synchronizations.Inconsistencies.MissingItemInconsistency`1">
+            <summary>
+            Denotes the inconsistency that an item is missing in a synchronized collection
+            </summary>
+            <typeparam name="TValue">The type of the item</typeparam>
+        </member>
+        <member name="P:NMF.Synchronizations.Inconsistencies.MissingItemInconsistency`1.Context">
+            <summary>
+            Gets the context in which this inconsistency occured
+            </summary>
+        </member>
+        <member name="P:NMF.Synchronizations.Inconsistencies.MissingItemInconsistency`1.SourceCollection">
+            <summary>
+            Gets the source collection where the element is contained
+            </summary>
+        </member>
+        <member name="P:NMF.Synchronizations.Inconsistencies.MissingItemInconsistency`1.TargetCollection">
+            <summary>
+            Gets the target collection where the element is missing
+            </summary>
+        </member>
+        <member name="P:NMF.Synchronizations.Inconsistencies.MissingItemInconsistency`1.Source">
+            <summary>
+            Gets the source element that is missing
+            </summary>
+        </member>
+        <member name="P:NMF.Synchronizations.Inconsistencies.MissingItemInconsistency`1.IsLeftMissing">
+            <summary>
+            True, if the element is missing in the left side, otherwise false
+            </summary>
+        </member>
+        <member name="P:NMF.Synchronizations.Inconsistencies.MissingItemInconsistency`1.CanResolveLeft">
+            <inheritdoc cref="T:NMF.Synchronizations.Inconsistencies.IInconsistency" />
+        </member>
+        <member name="P:NMF.Synchronizations.Inconsistencies.MissingItemInconsistency`1.CanResolveRight">
+            <inheritdoc cref="T:NMF.Synchronizations.Inconsistencies.IInconsistency" />
+        </member>
+        <member name="M:NMF.Synchronizations.Inconsistencies.MissingItemInconsistency`1.GetHashCode">
+            <inheritdoc cref="T:System.Object" />
+        </member>
+        <member name="M:NMF.Synchronizations.Inconsistencies.MissingItemInconsistency`1.Equals(System.Object)">
+            <inheritdoc cref="T:System.Object" />
+        </member>
+        <member name="M:NMF.Synchronizations.Inconsistencies.MissingItemInconsistency`1.ResolveLeft">
+            <inheritdoc cref="T:NMF.Synchronizations.Inconsistencies.IInconsistency" />
+        </member>
+        <member name="M:NMF.Synchronizations.Inconsistencies.MissingItemInconsistency`1.ResolveRight">
+            <inheritdoc cref="T:NMF.Synchronizations.Inconsistencies.IInconsistency" />
+        </member>
+        <member name="T:NMF.Synchronizations.Inconsistencies.MissingItemInconsistency`2">
+            <summary>
+            Denotes the inconsistency that an element is missing in a synchronized collection
+            </summary>
+            <typeparam name="TSource">The LHS type of elements</typeparam>
+            <typeparam name="TTarget">The RHS type of elements</typeparam>
+        </member>
+        <member name="P:NMF.Synchronizations.Inconsistencies.MissingItemInconsistency`2.Context">
+            <summary>
+            Gets the context in which this inconsistency occured
+            </summary>
+        </member>
+        <member name="P:NMF.Synchronizations.Inconsistencies.MissingItemInconsistency`2.Rule">
+            <summary>
+            Gets the transformation rule required to fix the inconsistency
+            </summary>
+        </member>
+        <member name="P:NMF.Synchronizations.Inconsistencies.MissingItemInconsistency`2.SourceCollection">
+            <summary>
+            Gets the source collection where the element is contained
+            </summary>
+        </member>
+        <member name="P:NMF.Synchronizations.Inconsistencies.MissingItemInconsistency`2.TargetCollection">
+            <summary>
+            Gets the target collection where the element is missing
+            </summary>
+        </member>
+        <member name="P:NMF.Synchronizations.Inconsistencies.MissingItemInconsistency`2.Source">
+            <summary>
+            Gets the source element that is missing
+            </summary>
+        </member>
+        <member name="P:NMF.Synchronizations.Inconsistencies.MissingItemInconsistency`2.IsLeftMissing">
+            <summary>
+            True, if the element is missing in the left side, otherwise false
+            </summary>
+        </member>
+        <member name="P:NMF.Synchronizations.Inconsistencies.MissingItemInconsistency`2.Representation">
+            <summary>
+            A human-readable representation of the inconsistency
+            </summary>
+        </member>
+        <member name="M:NMF.Synchronizations.Inconsistencies.MissingItemInconsistency`2.#ctor(NMF.Synchronizations.ISynchronizationContext,NMF.Transformations.TransformationRuleBase{`0,`1},System.Collections.Generic.ICollection{`0},System.Collections.Generic.ICollection{`1},`0,System.Boolean)">
+            <summary>
+            Creates a new inconsistency
+            </summary>
+            <param name="context">The context in which the inconsistency was found</param>
+            <param name="rule">The synchronization rule for which the inconsistency was found</param>
+            <param name="sourceCollection">The source collection of elements</param>
+            <param name="targetCollection">The target collection of elements</param>
+            <param name="source">The element that is missing</param>
+            <param name="isLeftMissing">True, if the element is missing in the LHS, otherwise false</param>
+        </member>
+        <member name="P:NMF.Synchronizations.Inconsistencies.MissingItemInconsistency`2.CanResolveLeft">
+            <inheritdoc cref="T:NMF.Synchronizations.Inconsistencies.IInconsistency" />
+        </member>
+        <member name="P:NMF.Synchronizations.Inconsistencies.MissingItemInconsistency`2.CanResolveRight">
+            <inheritdoc cref="T:NMF.Synchronizations.Inconsistencies.IInconsistency" />
+        </member>
+        <member name="M:NMF.Synchronizations.Inconsistencies.MissingItemInconsistency`2.GetHashCode">
+            <inheritdoc cref="T:System.Object" />
+        </member>
+        <member name="M:NMF.Synchronizations.Inconsistencies.MissingItemInconsistency`2.Equals(System.Object)">
+            <inheritdoc cref="T:System.Object" />
+        </member>
+        <member name="M:NMF.Synchronizations.Inconsistencies.MissingItemInconsistency`2.Equals(NMF.Synchronizations.Inconsistencies.IInconsistency)">
+            <inheritdoc />
+        </member>
+        <member name="M:NMF.Synchronizations.Inconsistencies.MissingItemInconsistency`2.ResolveLeft">
+            <inheritdoc cref="T:NMF.Synchronizations.Inconsistencies.IInconsistency" />
+        </member>
+        <member name="M:NMF.Synchronizations.Inconsistencies.MissingItemInconsistency`2.ResolveRight">
+            <inheritdoc cref="T:NMF.Synchronizations.Inconsistencies.IInconsistency" />
+        </member>
+        <member name="T:NMF.Synchronizations.Inconsistencies.ReferenceInconsistency`4">
+            <summary>
+            Denotes an inconsistency in a reference
+            </summary>
+        </member>
+        <member name="P:NMF.Synchronizations.Inconsistencies.ReferenceInconsistency`4.LeftValue">
+            <summary>
+            Gets the LHS dependent element
+            </summary>
+        </member>
+        <member name="P:NMF.Synchronizations.Inconsistencies.ReferenceInconsistency`4.RightValue">
+            <summary>
+            Gets the RHS dependent element
+            </summary>
+        </member>
+        <member name="P:NMF.Synchronizations.Inconsistencies.ReferenceInconsistency`4.BaseCorrespondence">
+            <summary>
+            The correspondence of elements on the basis of which the inconsistency was found
+            </summary>
+        </member>
+        <member name="P:NMF.Synchronizations.Inconsistencies.ReferenceInconsistency`4.CanResolveLeft">
+            <inheritdoc />
+        </member>
+        <member name="P:NMF.Synchronizations.Inconsistencies.ReferenceInconsistency`4.CanResolveRight">
+            <inheritdoc />
+        </member>
+        <member name="M:NMF.Synchronizations.Inconsistencies.ReferenceInconsistency`4.GetHashCode">
+            <inheritdoc />
+        </member>
+        <member name="M:NMF.Synchronizations.Inconsistencies.ReferenceInconsistency`4.Equals(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:NMF.Synchronizations.Inconsistencies.ReferenceInconsistency`4.Equals(NMF.Synchronizations.Inconsistencies.IInconsistency)">
+            <inheritdoc />
+        </member>
+        <member name="M:NMF.Synchronizations.Inconsistencies.ReferenceInconsistency`4.Equals(NMF.Synchronizations.Inconsistencies.ReferenceInconsistency{`0,`1,`2,`3})">
+            <inheritdoc />
+        </member>
+        <member name="M:NMF.Synchronizations.Inconsistencies.ReferenceInconsistency`4.ResolveLeft">
+            <inheritdoc />
+        </member>
+        <member name="M:NMF.Synchronizations.Inconsistencies.ReferenceInconsistency`4.ResolveRight">
+            <inheritdoc />
+        </member>
+        <member name="T:NMF.Synchronizations.PropertyInequality`3">
+            <summary>
+            Denotes an inconsistency that a property had different values
+            </summary>
+            <typeparam name="TLeft">The LHS context type</typeparam>
+            <typeparam name="TRight">The RHS context type</typeparam>
+            <typeparam name="TValue">The type of the property</typeparam>
+        </member>
+        <member name="P:NMF.Synchronizations.PropertyInequality`3.LeftContext">
+            <summary>
+            Gets the LHS context element
+            </summary>
+        </member>
+        <member name="P:NMF.Synchronizations.PropertyInequality`3.RightContext">
+            <summary>
+            Gets the RHS context element
+            </summary>
+        </member>
+        <member name="P:NMF.Synchronizations.PropertyInequality`3.LeftValue">
+            <summary>
+            Gets the LHS property value
+            </summary>
+        </member>
+        <member name="P:NMF.Synchronizations.PropertyInequality`3.RightValue">
+            <summary>
+            Gets the RHS property value
+            </summary>
+        </member>
+        <member name="P:NMF.Synchronizations.PropertyInequality`3.LeftSetter">
+            <summary>
+            Gets a function that sets the value at the LHS
+            </summary>
+        </member>
+        <member name="P:NMF.Synchronizations.PropertyInequality`3.RightSetter">
+            <summary>
+            Gets a function that sets the value at the RHS
+            </summary>
+        </member>
+        <member name="P:NMF.Synchronizations.PropertyInequality`3.CanResolveLeft">
+            <inheritdoc />
+        </member>
+        <member name="P:NMF.Synchronizations.PropertyInequality`3.CanResolveRight">
+            <inheritdoc />
+        </member>
+        <member name="P:NMF.Synchronizations.PropertyInequality`3.Representation">
+            <summary>
+            Gets a human-readable description of this inconsistency
+            </summary>
+        </member>
+        <member name="M:NMF.Synchronizations.PropertyInequality`3.#ctor(`0,System.Action{`0,`2},`2,`1,System.Action{`1,`2},`2)">
+            <summary>
+            Creates a new instance
+            </summary>
+            <param name="leftContext">The LHS context element</param>
+            <param name="leftSetter">The LHS setter</param>
+            <param name="leftValue">The left value</param>
+            <param name="rightContext">The RHS context element</param>
+            <param name="rightSetter">The RHS setter</param>
+            <param name="rightValue">The right value</param>
+        </member>
+        <member name="M:NMF.Synchronizations.PropertyInequality`3.ResolveLeft">
+            <inheritdoc />
+        </member>
+        <member name="M:NMF.Synchronizations.PropertyInequality`3.ResolveRight">
+            <inheritdoc />
+        </member>
+        <member name="M:NMF.Synchronizations.PropertyInequality`3.GetHashCode">
+            <inheritdoc />
+        </member>
+        <member name="M:NMF.Synchronizations.PropertyInequality`3.Equals(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:NMF.Synchronizations.PropertyInequality`3.Equals(NMF.Synchronizations.Inconsistencies.IInconsistency)">
+            <inheritdoc />
+        </member>
+        <member name="M:NMF.Synchronizations.PropertyInequality`3.Equals(NMF.Synchronizations.PropertyInequality{`0,`1,`2})">
+            <inheritdoc />
+        </member>
+        <member name="M:NMF.Synchronizations.PropertyInequality`3.ToString">
+            <inheritdoc />
+        </member>
+        <member name="T:NMF.Synchronizations.ISynchronizationContext">
+            <summary>
+            Denotes a context of a model synchronization run
+            </summary>
+        </member>
+        <member name="P:NMF.Synchronizations.ISynchronizationContext.Direction">
+            <summary>
+            Gets the direction of the synchronization process
+            </summary>
+        </member>
+        <member name="P:NMF.Synchronizations.ISynchronizationContext.ChangePropagation">
+            <summary>
+            Gets the change propagation mode of the model synchronization
+            </summary>
+        </member>
+        <member name="P:NMF.Synchronizations.ISynchronizationContext.Inconsistencies">
+            <summary>
+            Gets a collection of inconsistencies found during the synchronization
+            </summary>
+            <remarks>This property is only used by the synchronization engine if the direction is set to CheckOnly</remarks>
+        </member>
+        <member name="T:NMF.Synchronizations.OneWayPropertySynchronizationJob`3">
+            <summary>
+            Denotes a job of a property that is only synchronized in one direction
+            </summary>
+        </member>
+        <member name="M:NMF.Synchronizations.OneWayPropertySynchronizationJob`3.#ctor(System.Linq.Expressions.Expression{System.Func{`0,`2}},System.Action{`1,`2},System.Boolean)">
+            <summary>
+            Creates a new instance
+            </summary>
+            <param name="sourceGetter">A function to get the value at the source side</param>
+            <param name="targetSetter">A setter function to store the value at the target side</param>
+            <param name="isEarly">A flag indicating whether the job should be processed early</param>
+        </member>
+        <member name="P:NMF.Synchronizations.OneWayPropertySynchronizationJob`3.IsEarly">
+            <inheritdoc />
+        </member>
+        <member name="M:NMF.Synchronizations.OneWayPropertySynchronizationJob`3.Perform(`0,`1,NMF.Synchronizations.ISynchronizationContext)">
+            <inheritdoc />
+        </member>
+        <member name="T:NMF.Synchronizations.OpaqueSynchronizationJob`2">
+            <summary>
+            Denotes a synchronization job that is opque to the synchronization engine
+            </summary>
+        </member>
+        <member name="P:NMF.Synchronizations.OpaqueSynchronizationJob`2.Action">
+            <summary>
+            Gets the action that should be performed
+            </summary>
+        </member>
+        <member name="M:NMF.Synchronizations.OpaqueSynchronizationJob`2.#ctor(System.Func{`0,`1,NMF.Synchronizations.SynchronizationDirection,NMF.Synchronizations.ISynchronizationContext,System.IDisposable},System.Boolean)">
+            <summary>
+            Creates an opaque synchronization job
+            </summary>
+            <param name="action">The action that should be performed</param>
+            <param name="isEarly">Determines whether the job should be executed early</param>
+        </member>
+        <member name="M:NMF.Synchronizations.OpaqueSynchronizationJob`2.Perform(NMF.Synchronizations.SynchronizationComputation{`0,`1},NMF.Synchronizations.SynchronizationDirection,NMF.Synchronizations.ISynchronizationContext)">
+            <inheritdoc />
+        </member>
+        <member name="P:NMF.Synchronizations.OpaqueSynchronizationJob`2.IsEarly">
+            <inheritdoc />
+        </member>
+        <member name="T:NMF.Synchronizations.PropertySynchronizationJob`3">
+            <summary>
+            Denotes a synchronization job to synchronize properties
+            </summary>
+            <typeparam name="TLeft">The LHS type of elements</typeparam>
+            <typeparam name="TRight">The RHS type of elements</typeparam>
+            <typeparam name="TValue">The value type of the property synchronization</typeparam>
+        </member>
+        <member name="M:NMF.Synchronizations.PropertySynchronizationJob`3.#ctor(System.Linq.Expressions.Expression{System.Func{`0,`2}},System.Linq.Expressions.Expression{System.Func{`1,`2}},System.Boolean)">
+            <summary>
+            Creates a new property synchronization job
+            </summary>
+            <param name="leftSelector">The LHS selector</param>
+            <param name="rightSelector">The RHS selector</param>
+            <param name="isEarly">TRue, if the property synchronization should be executed immediately when the correspondence is established, otherwise false</param>
+        </member>
+        <member name="P:NMF.Synchronizations.PropertySynchronizationJob`3.IsEarly">
+            <inheritdoc />
+        </member>
+        <member name="M:NMF.Synchronizations.PropertySynchronizationJob`3.Perform(NMF.Synchronizations.SynchronizationComputation{`0,`1},NMF.Synchronizations.SynchronizationDirection,NMF.Synchronizations.ISynchronizationContext)">
+            <inheritdoc />
+        </member>
+        <member name="T:NMF.Synchronizations.ReflectiveSynchronization">
+            <summary>
+            Denotes a synchronization that assigns the synchronization rules from the nested classes through reflection
+            </summary>
+        </member>
+        <member name="M:NMF.Synchronizations.ReflectiveSynchronization.CreateRules">
+            <summary>
+            Creates all transformation rules of this transformation
+            </summary>
+            <remarks>This method is called during Initialization. The output IEnumerable-collection is saved into a list.</remarks>
+            <returns>A collection of transformation rules</returns>
+        </member>
+        <member name="M:NMF.Synchronizations.ReflectiveSynchronization.GetRuleForRuleType(System.Type)">
+            <summary>
+            Gets the rule with the specified type (exact match)
+            </summary>
+            <param name="transformationRule">The type of the transformation rule</param>
+            <returns>The transformation rule with this type or null, if there is none</returns>
+            <remarks>This method assumes there is only one transformation rule per type</remarks>
+        </member>
+        <member name="M:NMF.Synchronizations.ReflectiveSynchronization.Rule``1">
+            <summary>
+            Gets the transformation rule instance of the given rule type within the given transformation
+            </summary>
+            <typeparam name="TRule">The type of the desired transformation rule</typeparam>
+            <returns>The transformation rule</returns>
+        </member>
+        <member name="M:NMF.Synchronizations.ReflectiveSynchronization.SynchronizationRule``1">
+            <summary>
+            Gets the synchronization rule instance of the given rule type within the given transformation
+            </summary>
+            <typeparam name="TRule">The type of the desired transformation rule</typeparam>
+            <returns>The transformation rule</returns>
+        </member>
+        <member name="M:NMF.Synchronizations.ReflectiveSynchronization.GetRulesForRuleType(System.Type)">
+            <summary>
+            Gets all rules with the specified type (exact match)
+            </summary>
+            <param name="transformationRule">The type of the transformation rules</param>
+            <returns>A collection of all rules with this type</returns>
+            <remarks>This method assumes there is only one transformation rule per type</remarks>
+        </member>
+        <member name="M:NMF.Synchronizations.ReflectiveSynchronization.RegisterRules">
+            <summary>
+            Registers the rules of this transformation
+            </summary>
+        </member>
+        <member name="M:NMF.Synchronizations.ReflectiveSynchronization.CreateCustomTransformationRules">
+            <summary>
+            Creates the custom transformation rules that are no public nested classes (cannot be overridden by reflected rules)
+            </summary>
+            <remarks>This method is called during Initialization. The output IEnumerable-collection is saved into a list.</remarks>
+            <returns>A collection of transformation rules</returns>
+        </member>
+        <member name="M:NMF.Synchronizations.ReflectiveSynchronization.CreateDefaultTransformationRules">
+            <summary>
+            Creates the default transformation rules that are no public nested classes (can be overridden by reflected rules)
+            </summary>
+            <remarks>This method is called during Initialization. The output IEnumerable-collection is saved into a list.</remarks>
+            <returns>A collection of transformation rules</returns>
+        </member>
+        <member name="M:NMF.Synchronizations.ReflectiveSynchronization.CreateCustomSynchronizationRules">
+            <summary>
+            Creates the custom synchronization rules that are no public nested classes (cannot be overridden by reflected rules)
+            </summary>
+            <remarks>This method is called during Initialization. The output IEnumerable-collection is saved into a list.</remarks>
+            <returns>A collection of transformation rules</returns>
+        </member>
+        <member name="M:NMF.Synchronizations.ReflectiveSynchronization.CreateDefaultSynchronizationRules">
+            <summary>
+            Creates the default synchronization rules that are no public nested classes (can be overridden by reflected rules)
+            </summary>
+            <remarks>This method is called during Initialization. The output IEnumerable-collection is saved into a list.</remarks>
+            <returns>A collection of transformation rules</returns>
+        </member>
+        <member name="P:NMF.Synchronizations.ReflectiveSynchronization.SynchronizationRules">
+            <summary>
+            Gets the synchronization rules contained in this synchronization
+            </summary>
+        </member>
+        <member name="T:NMF.Synchronizations.Synchronization">
+            <summary>
+            Denotes an abstract synchronization
+            </summary>
+        </member>
+        <member name="P:NMF.Synchronizations.Synchronization.SynchronizationRules">
+            <summary>
+            Gets a collection of synchronization rules
+            </summary>
+        </member>
+        <member name="M:NMF.Synchronizations.Synchronization.RegisterRules">
+            <inheritdoc />
+        </member>
+        <member name="M:NMF.Synchronizations.Synchronization.GetSynchronizationRuleForType(System.Type)">
+            <summary>
+            Gets the synchronization rule for the given synchronization rule type
+            </summary>
+            <param name="type">The type of synchronization rule</param>
+            <returns>The synchronization rule object</returns>
+        </member>
+        <member name="M:NMF.Synchronizations.Synchronization.GetSynchronizationRulesForType(System.Type)">
+            <summary>
+            Gets all synchronization rules of the given type
+            </summary>
+            <param name="type">The type of synchronization rule</param>
+            <returns>All synchronization rules of the given type</returns>
+        </member>
+        <member name="M:NMF.Synchronizations.Synchronization.GetSynchronizationRuleForSignature(System.Type,System.Type)">
+            <summary>
+            Gets the synchronization rule for the given LHS and RHS type combination
+            </summary>
+            <param name="left">The LHS type</param>
+            <param name="right">The RHS type</param>
+            <returns>The synchronization rule or null, if no synchronization rule could be found</returns>
+        </member>
+        <member name="M:NMF.Synchronizations.Synchronization.GetSynchronizationRulesForSignature(System.Type,System.Type)">
+            <summary>
+            Gets all synchronization rules for the given LHS and RHS type combination
+            </summary>
+            <param name="left">The LHS type</param>
+            <param name="right">The RHS type</param>
+            <returns></returns>
+        </member>
+        <member name="M:NMF.Synchronizations.Synchronization.Synchronize``2(``0@,``1@,NMF.Synchronizations.SynchronizationDirection,NMF.Transformations.ChangePropagationMode)">
+            <summary>
+            Synchronizes the given LHS element with the provided RHS element or creates them if necessary
+            </summary>
+            <typeparam name="TLeft">The LHS type</typeparam>
+            <typeparam name="TRight">The RHS type</typeparam>
+            <param name="left">The LHS element</param>
+            <param name="right">The RHS element</param>
+            <param name="direction">The direction of the model synchronization</param>
+            <param name="changePropagation">The change propagation mode</param>
+            <returns>The synchronization context in which the synchronization takes place</returns>
+        </member>
+        <member name="M:NMF.Synchronizations.Synchronization.Synchronize``2(NMF.Synchronizations.SynchronizationRule{``0,``1},``0@,``1@,NMF.Synchronizations.SynchronizationDirection,NMF.Transformations.ChangePropagationMode)">
+            <summary>
+            Synchronizes the given LHS element with the provided RHS element or creates them if necessary
+            </summary>
+            <typeparam name="TLeft">The LHS type</typeparam>
+            <typeparam name="TRight">The RHS type</typeparam>
+            <param name="startRule">The rule that should be started with</param>
+            <param name="left">The LHS element</param>
+            <param name="right">The RHS element</param>
+            <param name="direction">The direction of the model synchronization</param>
+            <param name="changePropagation">The change propagation mode</param>
+            <returns>The synchronization context in which the synchronization takes place</returns>
+        </member>
+        <member name="M:NMF.Synchronizations.Synchronization.Synchronize``2(``0@,``1@,NMF.Synchronizations.ISynchronizationContext)">
+            <summary>
+            Synchronizes the given LHS element with the provided RHS element or creates them if necessary
+            </summary>
+            <typeparam name="TLeft">The LHS type</typeparam>
+            <typeparam name="TRight">The RHS type</typeparam>
+            <param name="left">The LHS element</param>
+            <param name="right">The RHS element</param>
+            <param name="synchronizationContext">The context in which the synchronization shall be executed</param>
+        </member>
+        <member name="M:NMF.Synchronizations.Synchronization.Synchronize``2(NMF.Synchronizations.SynchronizationRule{``0,``1},``0@,``1@,NMF.Synchronizations.ISynchronizationContext)">
+            <summary>
+            Synchronizes the given LHS element with the provided RHS element or creates them if necessary
+            </summary>
+            <typeparam name="TLeft">The LHS type</typeparam>
+            <typeparam name="TRight">The RHS type</typeparam>
+            <param name="startRule">The rule that should be started with</param>
+            <param name="left">The LHS element</param>
+            <param name="right">The RHS element</param>
+            <param name="synchronizationContext">The context in which the synchronization shall be executed</param>
+        </member>
+        <member name="M:NMF.Synchronizations.Synchronization.SynchronizeMany``2(System.Collections.Generic.ICollection{``0},System.Collections.Generic.ICollection{``1},NMF.Synchronizations.SynchronizationDirection,NMF.Transformations.ChangePropagationMode)">
+            <summary>
+            Synchronizes the given LHS elements with the provided RHS elements or creates them if necessary
+            </summary>
+            <typeparam name="TLeft">The LHS type</typeparam>
+            <typeparam name="TRight">The RHS type</typeparam>
+            <param name="lefts">The LHS elements</param>
+            <param name="rights">The RHS elements</param>
+            <param name="direction">The direction of the model synchronization</param>
+            <param name="changePropagation">The change propagation mode</param>
+            <returns>The synchronization context in which the synchronization takes place</returns>
+        </member>
+        <member name="M:NMF.Synchronizations.Synchronization.SynchronizeMany``2(NMF.Synchronizations.SynchronizationRule{``0,``1},System.Collections.Generic.ICollection{``0},System.Collections.Generic.ICollection{``1},NMF.Synchronizations.SynchronizationDirection,NMF.Transformations.ChangePropagationMode)">
+            <summary>
+            Synchronizes the given LHS elements with the provided RHS elements or creates them if necessary
+            </summary>
+            <typeparam name="TLeft">The LHS type</typeparam>
+            <typeparam name="TRight">The RHS type</typeparam>
+            <param name="startRule">The synchronization rule to start with</param>
+            <param name="lefts">The LHS elements</param>
+            <param name="rights">The RHS elements</param>
+            <param name="direction">The direction of the model synchronization</param>
+            <param name="changePropagation">The change propagation mode</param>
+            <returns>The synchronization context in which the synchronization takes place</returns>
+        </member>
+        <member name="M:NMF.Synchronizations.Synchronization.SynchronizeMany``2(System.Collections.Generic.ICollection{``0},System.Collections.Generic.ICollection{``1},NMF.Synchronizations.ISynchronizationContext)">
+            <summary>
+            Synchronizes the given LHS elements with the provided RHS elements or creates them if necessary
+            </summary>
+            <typeparam name="TLeft">The LHS type</typeparam>
+            <typeparam name="TRight">The RHS type</typeparam>
+            <param name="lefts">The LHS elements</param>
+            <param name="rights">The RHS elements</param>
+            <param name="synchronizationContext">The context in which the synchronization shall be executed</param>
+            <returns>The synchronization context in which the synchronization takes place</returns>
+        </member>
+        <member name="M:NMF.Synchronizations.Synchronization.SynchronizeMany``2(NMF.Synchronizations.SynchronizationRule{``0,``1},System.Collections.Generic.ICollection{``0},System.Collections.Generic.ICollection{``1},NMF.Synchronizations.ISynchronizationContext)">
+            <summary>
+            Synchronizes the given LHS elements with the provided RHS elements or creates them if necessary
+            </summary>
+            <typeparam name="TLeft">The LHS type</typeparam>
+            <typeparam name="TRight">The RHS type</typeparam>
+            <param name="startRule">The synchronization rule to start with</param>
+            <param name="lefts">The LHS elements</param>
+            <param name="rights">The RHS elements</param>
+            <param name="synchronizationContext">The context in which the synchronization shall be executed</param>
+            <returns>The synchronization context in which the synchronization takes place</returns>
+        </member>
+        <member name="T:NMF.Synchronizations.SynchronizationComputation`2">
+            <summary>
+            Denotes a computation in a synchronization
+            </summary>
+            <typeparam name="TIn"></typeparam>
+            <typeparam name="TOut"></typeparam>
+        </member>
+        <member name="E:NMF.Synchronizations.SynchronizationComputation`2.OutputChanged">
+            <summary>
+            Gets raised when the output of this synchronization changed
+            </summary>
+        </member>
+        <member name="P:NMF.Synchronizations.SynchronizationComputation`2.OmitCandidateSearch">
+            <summary>
+            Indicates whether candidate search can be skipped because the context was newly established
+            </summary>
+        </member>
+        <member name="M:NMF.Synchronizations.SynchronizationComputation`2.OnOutputChanged(NMF.Expressions.ValueChangedEventArgs)">
+            <summary>
+            Fires the event that the output has changed
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="P:NMF.Synchronizations.SynchronizationComputation`2.Input">
+            <summary>
+            Gets the input of this correspondence
+            </summary>
+        </member>
+        <member name="P:NMF.Synchronizations.SynchronizationComputation`2.Opposite">
+            <summary>
+            Gets the opposite correspondence
+            </summary>
+        </member>
+        <member name="M:NMF.Synchronizations.SynchronizationComputation`2.#ctor(NMF.Transformations.TransformationRuleBase{`0,`1},NMF.Transformations.TransformationRuleBase{`1,`0},NMF.Transformations.Core.IComputationContext,`0)">
+            <summary>
+            Creates a new instance
+            </summary>
+            <param name="rule">The transformation rule for which this correspondence was created</param>
+            <param name="reverseRule">The reverse transformation rule</param>
+            <param name="context">The context in which the correspondence is created</param>
+            <param name="input">The input element</param>
+        </member>
+        <member name="M:NMF.Synchronizations.SynchronizationComputation`2.GetInput(System.Int32)">
+            <inheritdoc />
+        </member>
+        <member name="M:NMF.Synchronizations.SynchronizationComputation`2.DoWhenOutputIsAvailable(System.Action{`0,`1})">
+            <summary>
+            Performs the given action when the corresponding element of this computation was found
+            </summary>
+            <param name="toPerform">The action to perform</param>
+        </member>
+        <member name="M:NMF.Synchronizations.SynchronizationComputation`2.AcceptNewOutput(`1)">
+            <inheritdoc />
+        </member>
+        <member name="P:NMF.Synchronizations.SynchronizationComputation`2.OutputCore">
+            <inheritdoc />
+        </member>
+        <member name="P:NMF.Synchronizations.SynchronizationComputation`2.SynchronizationContext">
+            <summary>
+            The context in which the correspondence has been established
+            </summary>
+        </member>
+        <member name="P:NMF.Synchronizations.SynchronizationComputation`2.IsOriginalComputation">
+            <summary>
+            Gets whether this correspondence was the original one
+            </summary>
+        </member>
+        <member name="P:NMF.Synchronizations.SynchronizationComputation`2.SynchronizationRule">
+            <summary>
+            Gets the synchronization rule of this correspondence
+            </summary>
+        </member>
+        <member name="P:NMF.Synchronizations.SynchronizationComputation`2.Dependencies">
+            <summary>
+            Gets the dependencies for this correspondence
+            </summary>
+        </member>
+        <member name="P:NMF.Synchronizations.SynchronizationComputation`2.Successors">
+            <inheritdoc />
+        </member>
+        <member name="P:NMF.Synchronizations.SynchronizationComputation`2.ExecutionMetaData">
+            <inheritdoc />
+        </member>
+        <member name="M:NMF.Synchronizations.SynchronizationComputation`2.Notify(System.Collections.Generic.IList{NMF.Expressions.INotificationResult})">
+            <inheritdoc />
+        </member>
+        <member name="M:NMF.Synchronizations.SynchronizationComputation`2.Dispose">
+            <inheritdoc />
+        </member>
+        <member name="P:NMF.Synchronizations.SynchronizationComputation`2.HasSuccessors">
+            <inheritdoc />
+        </member>
+        <member name="P:NMF.Synchronizations.SynchronizationComputation`2.IsAttached">
+            <inheritdoc />
+        </member>
+        <member name="P:NMF.Synchronizations.SynchronizationComputation`2.Count">
+            <inheritdoc />
+        </member>
+        <member name="M:NMF.Synchronizations.SynchronizationComputation`2.Set(NMF.Expressions.INotifiable)">
+            <inheritdoc />
+        </member>
+        <member name="M:NMF.Synchronizations.SynchronizationComputation`2.SetDummy">
+            <inheritdoc />
+        </member>
+        <member name="M:NMF.Synchronizations.SynchronizationComputation`2.Unset(NMF.Expressions.INotifiable,System.Boolean)">
+            <inheritdoc />
+        </member>
+        <member name="M:NMF.Synchronizations.SynchronizationComputation`2.UnsetAll">
+            <inheritdoc />
+        </member>
+        <member name="T:NMF.Synchronizations.SynchronizationContext">
+            <summary>
+            Denotes a context in which a synchroniation takes place
+            </summary>
+        </member>
+        <member name="M:NMF.Synchronizations.SynchronizationContext.#ctor(NMF.Synchronizations.Synchronization,NMF.Synchronizations.SynchronizationDirection,NMF.Transformations.ChangePropagationMode)">
+            <summary>
+            Creates a new instance
+            </summary>
+            <param name="synchronization">The synchronization that should be executed</param>
+            <param name="direction">The direction of the synchronization</param>
+            <param name="changePropagation">The change propagation mode of the synchronization</param>
+        </member>
+        <member name="P:NMF.Synchronizations.SynchronizationContext.Direction">
+            <inheritdoc />
+        </member>
+        <member name="P:NMF.Synchronizations.SynchronizationContext.ChangePropagation">
+            <inheritdoc />
+        </member>
+        <member name="P:NMF.Synchronizations.SynchronizationContext.Inconsistencies">
+            <inheritdoc />
+        </member>
+        <member name="T:NMF.Synchronizations.SynchronizationDirection">
+            <summary>
+            Denotes the direction of a synchronization
+            </summary>
+        </member>
+        <member name="F:NMF.Synchronizations.SynchronizationDirection.LeftToRight">
+            <summary>
+            Elements existing in LHS are translated to RHS
+            </summary>
+        </member>
+        <member name="F:NMF.Synchronizations.SynchronizationDirection.RightToLeft">
+            <summary>
+            Elements existing in RHS are translated to LHS
+            </summary>
+        </member>
+        <member name="F:NMF.Synchronizations.SynchronizationDirection.LeftToRightForced">
+            <summary>
+            Elements existing in LHS are translated to RHS, RHS elements with no existing corresponding LHS element are deleted
+            </summary>
+        </member>
+        <member name="F:NMF.Synchronizations.SynchronizationDirection.RightToLeftForced">
+            <summary>
+            Elements existing in RHS are translated to LHS, LHS elements with no existing corresponding HS element are deleted
+            </summary>
+        </member>
+        <member name="F:NMF.Synchronizations.SynchronizationDirection.LeftWins">
+            <summary>
+            Elements existing in LHS are translated to RHS and vice versa, in case of conflicts the LHS wins
+            </summary>
+        </member>
+        <member name="F:NMF.Synchronizations.SynchronizationDirection.RightWins">
+            <summary>
+            Elements existing in LHS are translated to RHS and vice versa, in case of conflicts the RHS wins
+            </summary>
+        </member>
+        <member name="F:NMF.Synchronizations.SynchronizationDirection.CheckOnly">
+            <summary>
+            No changes are made, but only inconsistencies are found and reported
+            </summary>
+        </member>
+        <member name="T:NMF.Synchronizations.SynchronizationDirectionExtensions">
+            <summary>
+            Denotes extension methods for synchronization directions
+            </summary>
+        </member>
+        <member name="M:NMF.Synchronizations.SynchronizationDirectionExtensions.IsLeftToRight(NMF.Synchronizations.SynchronizationDirection)">
+            <summary>
+            Determines whether the basic direction is LHS to RHS
+            </summary>
+            <param name="direction">The direction</param>
+            <returns>True, if the direction is mostly LHS to RHS, otherwise false</returns>
+        </member>
+        <member name="M:NMF.Synchronizations.SynchronizationDirectionExtensions.IsRightToLeft(NMF.Synchronizations.SynchronizationDirection)">
+            <summary>
+            Determines whether the basic direction is RHS to LHS
+            </summary>
+            <param name="direction">The direction</param>
+            <returns>True, if the direction is mostly RHS to LHS, otherwise false</returns>
+        </member>
+        <member name="T:NMF.Synchronizations.SynchronizationExtensions">
+            <summary>
+            Denotes common useful extensions in the context of synchronizations
+            </summary>
+        </member>
+        <member name="M:NMF.Synchronizations.SynchronizationExtensions.SyncRule``1(NMF.Transformations.Core.GeneralTransformationRule)">
+            <summary>
+            Gets the synchronization rule of the given type
+            </summary>
+            <typeparam name="TRule">The type of synchronization rule</typeparam>
+            <param name="rule">The transformation rule for which the synchronization rule is added</param>
+            <returns>The synchronization rule or null, if it cannot be found</returns>
+        </member>
+        <member name="T:NMF.Synchronizations.ISynchronizationJob`2">
+            <summary>
+            Denotes a job that should be performed as part of a model synchronization
+            </summary>
+            <typeparam name="TLeft">The LHS type</typeparam>
+            <typeparam name="TRight">The RHS type</typeparam>
+        </member>
+        <member name="P:NMF.Synchronizations.ISynchronizationJob`2.IsEarly">
+            <summary>
+            True, if the job must be executed before any dependency, otherwise False
+            </summary>
+        </member>
+        <member name="M:NMF.Synchronizations.ISynchronizationJob`2.Perform(NMF.Synchronizations.SynchronizationComputation{`0,`1},NMF.Synchronizations.SynchronizationDirection,NMF.Synchronizations.ISynchronizationContext)">
+            <summary>
+            Performs the job
+            </summary>
+            <param name="computation">The correspondence</param>
+            <param name="direction">The direction of the synchronization</param>
+            <param name="context">The context of the synchronization</param>
+            <returns>A disposable that will be disposed once the correspondence is broken or null</returns>
+        </member>
+        <member name="T:NMF.Synchronizations.SynchronizationRule`2">
+            <summary>
+            Denotes an abstract synchronization rule
+            </summary>
+            <typeparam name="TLeft">The LHS type of the synchronization rule</typeparam>
+            <typeparam name="TRight">The RHS type of the synchronization rule</typeparam>
+        </member>
+        <member name="P:NMF.Synchronizations.SynchronizationRule`2.SynchronizationJobs">
+            <summary>
+            Gets the jobs performed by this synchronization rule
+            </summary>
+        </member>
+        <member name="M:NMF.Synchronizations.SynchronizationRule`2.#ctor">
+            <summary>
+            Creates a new instance
+            </summary>
+        </member>
+        <member name="P:NMF.Synchronizations.SynchronizationRule`2.LeftToRight">
+            <summary>
+            Gets the transformation rule responsible of transforming elements from left to right
+            </summary>
+        </member>
+        <member name="P:NMF.Synchronizations.SynchronizationRule`2.RightToLeft">
+            <summary>
+            Gets the transformation rule responsible of transforming elements from right to left
+            </summary>
+        </member>
+        <member name="P:NMF.Synchronizations.SynchronizationRule`2.TransformationDelayLevel">
+            <summary>
+            Gets or sets the transformation delay level
+            </summary>
+        </member>
+        <member name="P:NMF.Synchronizations.SynchronizationRule`2.OutputDelayLevel">
+            <summary>
+            Gets or sets the output delay level of the transformations
+            </summary>
+        </member>
+        <member name="M:NMF.Synchronizations.SynchronizationRule`2.ShouldCorrespond(`0,`1,NMF.Synchronizations.ISynchronizationContext)">
+            <summary>
+            Determines whether a correspondence shoulf be established between the given LHS and RHS elements
+            </summary>
+            <param name="left">The LHS element</param>
+            <param name="right">The RHS element</param>
+            <param name="context">The context in which the synchronization is run</param>
+            <returns>True, if the elements should be regarded as corresponding to each other, otherwise false</returns>
+        </member>
+        <member name="P:NMF.Synchronizations.SynchronizationRule`2.LeftType">
+            <summary>
+            Gets the LHS type of this rule
+            </summary>
+        </member>
+        <member name="P:NMF.Synchronizations.SynchronizationRule`2.RightType">
+            <summary>
+            Gets the RHS type of this rule
+            </summary>
+        </member>
+        <member name="M:NMF.Synchronizations.SynchronizationRule`2.Synchronize``2(NMF.Synchronizations.SynchronizationRule{``0,``1},System.Linq.Expressions.Expression{System.Func{`0,``0}},System.Linq.Expressions.Expression{System.Func{`1,``1}},System.Linq.Expressions.Expression{System.Func{`0,`1,System.Boolean}})">
+            <summary>
+            Synchronizes the dependent elements using the provided synchronization rule
+            </summary>
+            <typeparam name="TDepLeft">The dependent LHS type</typeparam>
+            <typeparam name="TDepRight">The dependent RHS type</typeparam>
+            <param name="rule">The rule that should be used as isomorphism</param>
+            <param name="leftSelector">The LHS in-model lens</param>
+            <param name="rightSelector">The RHS in-model lens</param>
+            <param name="guard">A guard condition or null</param>
+        </member>
+        <member name="M:NMF.Synchronizations.SynchronizationRule`2.Synchronize``2(NMF.Synchronizations.SynchronizationRule{``0,``1},System.Linq.Expressions.Expression{System.Func{`0,NMF.Transformations.Core.ITransformationContext,``0}},System.Linq.Expressions.Expression{System.Func{`1,NMF.Transformations.Core.ITransformationContext,``1}},System.Linq.Expressions.Expression{System.Func{`0,`1,System.Boolean}})">
+            <summary>
+            Synchronizes the dependent elements using the provided synchronization rule
+            </summary>
+            <typeparam name="TDepLeft">The dependent LHS type</typeparam>
+            <typeparam name="TDepRight">The dependent RHS type</typeparam>
+            <param name="rule">The rule that should be used as isomorphism</param>
+            <param name="leftSelector">The LHS in-model lens</param>
+            <param name="rightSelector">The RHS in-model lens</param>
+            <param name="guard">A guard condition or null</param>
+        </member>
+        <member name="M:NMF.Synchronizations.SynchronizationRule`2.Synchronize``2(NMF.Synchronizations.SynchronizationRule{``0,``1},System.Linq.Expressions.Expression{System.Func{`0,``0}},System.Action{`0,``0},System.Linq.Expressions.Expression{System.Func{`1,``1}},System.Linq.Expressions.Expression{System.Func{`0,`1,System.Boolean}})">
+            <summary>
+            Synchronizes the dependent elements using the provided synchronization rule
+            </summary>
+            <typeparam name="TDepLeft">The dependent LHS type</typeparam>
+            <typeparam name="TDepRight">The dependent RHS type</typeparam>
+            <param name="rule">The rule that should be used as isomorphism</param>
+            <param name="leftSelector">The LHS in-model lens</param>
+            <param name="leftSetter">An alternative LHS lens put</param>
+            <param name="rightSelector">The RHS in-model lens</param>
+            <param name="guard">A guard condition or null</param>
+        </member>
+        <member name="M:NMF.Synchronizations.SynchronizationRule`2.Synchronize``2(NMF.Synchronizations.SynchronizationRule{``0,``1},System.Linq.Expressions.Expression{System.Func{`0,NMF.Transformations.Core.ITransformationContext,``0}},System.Action{`0,NMF.Transformations.Core.ITransformationContext,``0},System.Linq.Expressions.Expression{System.Func{`1,NMF.Transformations.Core.ITransformationContext,``1}},System.Linq.Expressions.Expression{System.Func{`0,`1,System.Boolean}})">
+            <summary>
+            Synchronizes the dependent elements using the provided synchronization rule
+            </summary>
+            <typeparam name="TDepLeft">The dependent LHS type</typeparam>
+            <typeparam name="TDepRight">The dependent RHS type</typeparam>
+            <param name="rule">The rule that should be used as isomorphism</param>
+            <param name="leftSelector">The LHS in-model lens</param>
+            <param name="leftSetter">An alternative LHS lens put</param>
+            <param name="rightSelector">The RHS in-model lens</param>
+            <param name="guard">A guard condition or null</param>
+        </member>
+        <member name="M:NMF.Synchronizations.SynchronizationRule`2.Synchronize``2(NMF.Synchronizations.SynchronizationRule{``0,``1},System.Linq.Expressions.Expression{System.Func{`0,``0}},System.Linq.Expressions.Expression{System.Func{`1,``1}},System.Action{`1,``1},System.Linq.Expressions.Expression{System.Func{`0,`1,System.Boolean}})">
+            <summary>
+            Synchronizes the dependent elements using the provided synchronization rule
+            </summary>
+            <typeparam name="TDepLeft">The dependent LHS type</typeparam>
+            <typeparam name="TDepRight">The dependent RHS type</typeparam>
+            <param name="rule">The rule that should be used as isomorphism</param>
+            <param name="leftSelector">The LHS in-model lens</param>
+            <param name="rightSelector">The RHS in-model lens</param>
+            <param name="rightSetter">An alternative RHS lens put</param>
+            <param name="guard">A guard condition or null</param>
+        </member>
+        <member name="M:NMF.Synchronizations.SynchronizationRule`2.Synchronize``2(NMF.Synchronizations.SynchronizationRule{``0,``1},System.Linq.Expressions.Expression{System.Func{`0,NMF.Transformations.Core.ITransformationContext,``0}},System.Linq.Expressions.Expression{System.Func{`1,NMF.Transformations.Core.ITransformationContext,``1}},System.Action{`1,NMF.Transformations.Core.ITransformationContext,``1},System.Linq.Expressions.Expression{System.Func{`0,`1,System.Boolean}})">
+            <summary>
+            Synchronizes the dependent elements using the provided synchronization rule
+            </summary>
+            <typeparam name="TDepLeft">The dependent LHS type</typeparam>
+            <typeparam name="TDepRight">The dependent RHS type</typeparam>
+            <param name="rule">The rule that should be used as isomorphism</param>
+            <param name="leftSelector">The LHS in-model lens</param>
+            <param name="rightSelector">The RHS in-model lens</param>
+            <param name="rightSetter">An alternative RHS lens put</param>
+            <param name="guard">A guard condition or null</param>
+        </member>
+        <member name="M:NMF.Synchronizations.SynchronizationRule`2.Synchronize``2(NMF.Synchronizations.SynchronizationRule{``0,``1},System.Linq.Expressions.Expression{System.Func{`0,``0}},System.Action{`0,``0},System.Linq.Expressions.Expression{System.Func{`1,``1}},System.Action{`1,``1},System.Linq.Expressions.Expression{System.Func{`0,`1,System.Boolean}})">
+            <summary>
+            Synchronizes the dependent elements using the provided synchronization rule
+            </summary>
+            <typeparam name="TDepLeft">The dependent LHS type</typeparam>
+            <typeparam name="TDepRight">The dependent RHS type</typeparam>
+            <param name="rule">The rule that should be used as isomorphism</param>
+            <param name="leftSelector">The LHS in-model lens</param>
+            <param name="leftSetter">An alternative LHS lens put</param>
+            <param name="rightSelector">The RHS in-model lens</param>
+            <param name="rightSetter">An alternative RHS lens put</param>
+            <param name="guard">A guard condition or null</param>
+        </member>
+        <member name="M:NMF.Synchronizations.SynchronizationRule`2.Synchronize``2(NMF.Synchronizations.SynchronizationRule{``0,``1},System.Linq.Expressions.Expression{System.Func{`0,NMF.Transformations.Core.ITransformationContext,``0}},System.Action{`0,NMF.Transformations.Core.ITransformationContext,``0},System.Linq.Expressions.Expression{System.Func{`1,NMF.Transformations.Core.ITransformationContext,``1}},System.Action{`1,NMF.Transformations.Core.ITransformationContext,``1},System.Linq.Expressions.Expression{System.Func{`0,`1,System.Boolean}})">
+            <summary>
+            Synchronizes the dependent elements using the provided synchronization rule
+            </summary>
+            <typeparam name="TDepLeft">The dependent LHS type</typeparam>
+            <typeparam name="TDepRight">The dependent RHS type</typeparam>
+            <param name="rule">The rule that should be used as isomorphism</param>
+            <param name="leftSelector">The LHS in-model lens</param>
+            <param name="leftSetter">An alternative LHS lens put</param>
+            <param name="rightSelector">The RHS in-model lens</param>
+            <param name="rightSetter">An alternative RHS lens put</param>
+            <param name="guard">A guard condition or null</param>
+        </member>
+        <member name="M:NMF.Synchronizations.SynchronizationRule`2.SynchronizeLeftToRightOnly``2(NMF.Synchronizations.SynchronizationRule{``0,``1},System.Linq.Expressions.Expression{System.Func{`0,``0}},System.Linq.Expressions.Expression{System.Func{`1,``1}},System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            Synchronizes the dependent elements using the provided synchronization rule but only Left to Right
+            </summary>
+            <typeparam name="TDepLeft">The dependent LHS type</typeparam>
+            <typeparam name="TDepRight">The dependent RHS type</typeparam>
+            <param name="rule">The rule that should be used as isomorphism</param>
+            <param name="leftSelector">The LHS in-model lens</param>
+            <param name="rightSelector">The RHS in-model lens</param>
+            <param name="guard">A guard condition or null</param>
+        </member>
+        <member name="M:NMF.Synchronizations.SynchronizationRule`2.SynchronizeLeftToRightOnly``2(NMF.Synchronizations.SynchronizationRule{``0,``1},System.Linq.Expressions.Expression{System.Func{`0,NMF.Transformations.Core.ITransformationContext,``0}},System.Linq.Expressions.Expression{System.Func{`1,NMF.Transformations.Core.ITransformationContext,``1}},System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            Synchronizes the dependent elements using the provided synchronization rule but only Left to Right
+            </summary>
+            <typeparam name="TDepLeft">The dependent LHS type</typeparam>
+            <typeparam name="TDepRight">The dependent RHS type</typeparam>
+            <param name="rule">The rule that should be used as isomorphism</param>
+            <param name="leftSelector">The LHS in-model lens</param>
+            <param name="rightSelector">The RHS in-model lens</param>
+            <param name="guard">A guard condition or null</param>
+        </member>
+        <member name="M:NMF.Synchronizations.SynchronizationRule`2.SynchronizeRightToLeftOnly``2(NMF.Synchronizations.SynchronizationRule{``0,``1},System.Linq.Expressions.Expression{System.Func{`0,``0}},System.Linq.Expressions.Expression{System.Func{`1,``1}},System.Linq.Expressions.Expression{System.Func{`1,System.Boolean}})">
+            <summary>
+            Synchronizes the dependent elements using the provided synchronization rule but only Right to Left
+            </summary>
+            <typeparam name="TDepLeft">The dependent LHS type</typeparam>
+            <typeparam name="TDepRight">The dependent RHS type</typeparam>
+            <param name="rule">The rule that should be used as isomorphism</param>
+            <param name="leftSelector">The LHS in-model lens</param>
+            <param name="rightSelector">The RHS in-model lens</param>
+            <param name="guard">A guard condition or null</param>
+        </member>
+        <member name="M:NMF.Synchronizations.SynchronizationRule`2.SynchronizeRightToLeftOnly``2(NMF.Synchronizations.SynchronizationRule{``0,``1},System.Linq.Expressions.Expression{System.Func{`0,NMF.Transformations.Core.ITransformationContext,``0}},System.Linq.Expressions.Expression{System.Func{`1,NMF.Transformations.Core.ITransformationContext,``1}},System.Linq.Expressions.Expression{System.Func{`1,System.Boolean}})">
+            <summary>
+            Synchronizes the dependent elements using the provided synchronization rule but only Right to Left
+            </summary>
+            <typeparam name="TDepLeft">The dependent LHS type</typeparam>
+            <typeparam name="TDepRight">The dependent RHS type</typeparam>
+            <param name="rule">The rule that should be used as isomorphism</param>
+            <param name="leftSelector">The LHS in-model lens</param>
+            <param name="rightSelector">The RHS in-model lens</param>
+            <param name="guard">A guard condition or null</param>
+        </member>
+        <member name="M:NMF.Synchronizations.SynchronizationRule`2.SynchronizeMany``2(NMF.Synchronizations.SynchronizationRule{``0,``1},System.Linq.Expressions.Expression{System.Func{`0,NMF.Expressions.ICollectionExpression{``0}}},System.Linq.Expressions.Expression{System.Func{`1,NMF.Expressions.ICollectionExpression{``1}}})">
+            <summary>
+            Synchronizes the dependent elements using the provided synchronization rule
+            </summary>
+            <typeparam name="TDepLeft">The dependent LHS type</typeparam>
+            <typeparam name="TDepRight">The dependent RHS type</typeparam>
+            <param name="rule">The rule that should be used as isomorphism</param>
+            <param name="leftSelector">The LHS in-model lens</param>
+            <param name="rightSelector">The RHS in-model lens</param>
+        </member>
+        <member name="M:NMF.Synchronizations.SynchronizationRule`2.SynchronizeMany``2(NMF.Synchronizations.SynchronizationRule{``0,``1},System.Linq.Expressions.Expression{System.Func{`0,NMF.Transformations.Core.ITransformationContext,NMF.Expressions.ICollectionExpression{``0}}},System.Linq.Expressions.Expression{System.Func{`1,NMF.Transformations.Core.ITransformationContext,NMF.Expressions.ICollectionExpression{``1}}})">
+            <summary>
+            Synchronizes the dependent elements using the provided synchronization rule
+            </summary>
+            <typeparam name="TDepLeft">The dependent LHS type</typeparam>
+            <typeparam name="TDepRight">The dependent RHS type</typeparam>
+            <param name="rule">The rule that should be used as isomorphism</param>
+            <param name="leftSelector">The LHS in-model lens</param>
+            <param name="rightSelector">The RHS in-model lens</param>
+        </member>
+        <member name="M:NMF.Synchronizations.SynchronizationRule`2.SynchronizeManyLeftToRightOnly``2(NMF.Synchronizations.SynchronizationRule{``0,``1},System.Linq.Expressions.Expression{System.Func{`0,NMF.Expressions.IEnumerableExpression{``0}}},System.Linq.Expressions.Expression{System.Func{`1,System.Collections.Generic.ICollection{``1}}})">
+            <summary>
+            Synchronizes the dependent elements using the provided synchronization rule but only Left to Right
+            </summary>
+            <typeparam name="TDepLeft">The dependent LHS type</typeparam>
+            <typeparam name="TDepRight">The dependent RHS type</typeparam>
+            <param name="rule">The rule that should be used as isomorphism</param>
+            <param name="leftSelector">The LHS in-model lens</param>
+            <param name="rightSelector">The RHS in-model lens</param>
+        </member>
+        <member name="M:NMF.Synchronizations.SynchronizationRule`2.SynchronizeManyLeftToRightOnly``2(NMF.Synchronizations.SynchronizationRule{``0,``1},System.Linq.Expressions.Expression{System.Func{`0,NMF.Transformations.Core.ITransformationContext,NMF.Expressions.IEnumerableExpression{``0}}},System.Linq.Expressions.Expression{System.Func{`1,NMF.Transformations.Core.ITransformationContext,System.Collections.Generic.ICollection{``1}}})">
+            <summary>
+            Synchronizes the dependent elements using the provided synchronization rule but only Left to Right
+            </summary>
+            <typeparam name="TDepLeft">The dependent LHS type</typeparam>
+            <typeparam name="TDepRight">The dependent RHS type</typeparam>
+            <param name="rule">The rule that should be used as isomorphism</param>
+            <param name="leftSelector">The LHS in-model lens</param>
+            <param name="rightSelector">The RHS in-model lens</param>
+        </member>
+        <member name="M:NMF.Synchronizations.SynchronizationRule`2.SynchronizeManyRightToLeftOnly``2(NMF.Synchronizations.SynchronizationRule{``0,``1},System.Linq.Expressions.Expression{System.Func{`0,System.Collections.Generic.ICollection{``0}}},System.Linq.Expressions.Expression{System.Func{`1,NMF.Expressions.IEnumerableExpression{``1}}})">
+            <summary>
+            Synchronizes the dependent elements using the provided synchronization rule but only Right to Left
+            </summary>
+            <typeparam name="TDepLeft">The dependent LHS type</typeparam>
+            <typeparam name="TDepRight">The dependent RHS type</typeparam>
+            <param name="rule">The rule that should be used as isomorphism</param>
+            <param name="leftSelector">The LHS in-model lens</param>
+            <param name="rightSelector">The RHS in-model lens</param>
+        </member>
+        <member name="M:NMF.Synchronizations.SynchronizationRule`2.SynchronizeManyRightToLeftOnly``2(NMF.Synchronizations.SynchronizationRule{``0,``1},System.Linq.Expressions.Expression{System.Func{`0,NMF.Transformations.Core.ITransformationContext,System.Collections.Generic.ICollection{``0}}},System.Linq.Expressions.Expression{System.Func{`1,NMF.Transformations.Core.ITransformationContext,NMF.Expressions.IEnumerableExpression{``1}}})">
+            <summary>
+            Synchronizes the dependent elements using the provided synchronization rule but only Right to Left
+            </summary>
+            <typeparam name="TDepLeft">The dependent LHS type</typeparam>
+            <typeparam name="TDepRight">The dependent RHS type</typeparam>
+            <param name="rule">The rule that should be used as isomorphism</param>
+            <param name="leftSelector">The LHS in-model lens</param>
+            <param name="rightSelector">The RHS in-model lens</param>
+        </member>
+        <member name="M:NMF.Synchronizations.SynchronizationRule`2.SynchronizeLate``1(System.Linq.Expressions.Expression{System.Func{`0,``0}},System.Linq.Expressions.Expression{System.Func{`1,``0}})">
+            <summary>
+            Synchronizes the dependent values late
+            </summary>
+            <typeparam name="TValue">The type of the values</typeparam>
+            <param name="leftSelector">The LHS in-model lens</param>
+            <param name="rightSelector">The RHS in-model lens</param>
+        </member>
+        <member name="M:NMF.Synchronizations.SynchronizationRule`2.Synchronize``1(System.Linq.Expressions.Expression{System.Func{`0,``0}},System.Linq.Expressions.Expression{System.Func{`1,``0}})">
+            <summary>
+            Synchronizes the dependent values
+            </summary>
+            <typeparam name="TValue">The type of the values</typeparam>
+            <param name="leftSelector">The LHS in-model lens</param>
+            <param name="rightSelector">The RHS in-model lens</param>
+        </member>
+        <member name="M:NMF.Synchronizations.SynchronizationRule`2.Synchronize``1(System.Linq.Expressions.Expression{System.Func{`0,``0}},System.Linq.Expressions.Expression{System.Func{`1,``0}},System.Linq.Expressions.Expression{System.Func{`0,`1,System.Boolean}})">
+            <summary>
+            Synchronizes the dependent values
+            </summary>
+            <typeparam name="TValue">The type of the values</typeparam>
+            <param name="leftSelector">The LHS in-model lens</param>
+            <param name="rightSelector">The RHS in-model lens</param>
+            <param name="guard">A guard condition or null</param>
+        </member>
+        <member name="M:NMF.Synchronizations.SynchronizationRule`2.SynchronizeMany``1(System.Func{`0,NMF.Expressions.ICollectionExpression{``0}},System.Func{`1,NMF.Expressions.ICollectionExpression{``0}})">
+            <summary>
+            Synchronizes the dependent values
+            </summary>
+            <typeparam name="TValue">The type of values</typeparam>
+            <param name="leftSelector">The LHS in-model lens</param>
+            <param name="rightSelector">The RHS in-model lens</param>
+        </member>
+        <member name="M:NMF.Synchronizations.SynchronizationRule`2.SynchronizeMany``1(System.Func{`0,NMF.Expressions.ICollectionExpression{``0}},System.Func{`1,NMF.Expressions.ICollectionExpression{``0}},System.Linq.Expressions.Expression{System.Func{`0,`1,System.Boolean}})">
+            <summary>
+            Synchronizes the dependent values
+            </summary>
+            <typeparam name="TValue">The type of values</typeparam>
+            <param name="leftSelector">The LHS in-model lens</param>
+            <param name="rightSelector">The RHS in-model lens</param>
+            <param name="guard">A guard condition or null</param>
+        </member>
+        <member name="M:NMF.Synchronizations.SynchronizationRule`2.SynchronizeManyLate``1(System.Func{`0,NMF.Expressions.ICollectionExpression{``0}},System.Func{`1,NMF.Expressions.ICollectionExpression{``0}})">
+            <summary>
+            Synchronizes the dependent values
+            </summary>
+            <typeparam name="TValue">The type of values</typeparam>
+            <param name="leftSelector">The LHS in-model lens</param>
+            <param name="rightSelector">The RHS in-model lens</param>
+        </member>
+        <member name="M:NMF.Synchronizations.SynchronizationRule`2.SynchronizeManyLate``1(System.Func{`0,NMF.Expressions.ICollectionExpression{``0}},System.Func{`1,NMF.Expressions.ICollectionExpression{``0}},System.Linq.Expressions.Expression{System.Func{`0,`1,System.Boolean}})">
+            <summary>
+            Synchronizes the dependent values
+            </summary>
+            <typeparam name="TValue">The type of values</typeparam>
+            <param name="leftSelector">The LHS in-model lens</param>
+            <param name="rightSelector">The RHS in-model lens</param>
+            <param name="guard">A guard condition or null</param>
+        </member>
+        <member name="M:NMF.Synchronizations.SynchronizationRule`2.SynchronizeManyLeftToRightOnly``1(System.Func{`0,NMF.Expressions.IEnumerableExpression{``0}},System.Func{`1,System.Collections.Generic.ICollection{``0}})">
+            <summary>
+            Synchronizes the dependent values but only left to right
+            </summary>
+            <typeparam name="TValue">The type of values</typeparam>
+            <param name="leftSelector">The LHS in-model lens</param>
+            <param name="rightSelector">The RHS in-model lens</param>
+        </member>
+        <member name="M:NMF.Synchronizations.SynchronizationRule`2.SynchronizeManyLeftToRightOnly``1(System.Func{`0,NMF.Transformations.Core.ITransformationContext,NMF.Expressions.IEnumerableExpression{``0}},System.Func{`1,NMF.Transformations.Core.ITransformationContext,System.Collections.Generic.ICollection{``0}})">
+            <summary>
+            Synchronizes the dependent values but only left to right
+            </summary>
+            <typeparam name="TValue">The type of values</typeparam>
+            <param name="leftSelector">The LHS in-model lens</param>
+            <param name="rightSelector">The RHS in-model lens</param>
+        </member>
+        <member name="M:NMF.Synchronizations.SynchronizationRule`2.SynchronizeManyLeftToRightOnly``1(System.Func{`0,NMF.Expressions.IEnumerableExpression{``0}},System.Func{`1,System.Collections.Generic.ICollection{``0}},System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            Synchronizes the dependent values but only left to right
+            </summary>
+            <typeparam name="TValue">The type of values</typeparam>
+            <param name="leftSelector">The LHS in-model lens</param>
+            <param name="rightSelector">The RHS in-model lens</param>
+            <param name="guard">A guard condition or null</param>
+        </member>
+        <member name="M:NMF.Synchronizations.SynchronizationRule`2.SynchronizeManyLeftToRightOnly``1(System.Func{`0,NMF.Transformations.Core.ITransformationContext,NMF.Expressions.IEnumerableExpression{``0}},System.Func{`1,NMF.Transformations.Core.ITransformationContext,System.Collections.Generic.ICollection{``0}},System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            Synchronizes the dependent values but only left to right
+            </summary>
+            <typeparam name="TValue">The type of values</typeparam>
+            <param name="leftSelector">The LHS in-model lens</param>
+            <param name="rightSelector">The RHS in-model lens</param>
+            <param name="guard">A guard condition or null</param>
+        </member>
+        <member name="M:NMF.Synchronizations.SynchronizationRule`2.SynchronizeManyLeftToRightOnlyLate``1(System.Func{`0,NMF.Expressions.IEnumerableExpression{``0}},System.Func{`1,System.Collections.Generic.ICollection{``0}})">
+            <summary>
+            Synchronizes the dependent values but only left to right
+            </summary>
+            <typeparam name="TValue">The type of values</typeparam>
+            <param name="leftSelector">The LHS in-model lens</param>
+            <param name="rightSelector">The RHS in-model lens</param>
+        </member>
+        <member name="M:NMF.Synchronizations.SynchronizationRule`2.SynchronizeManyLeftToRightOnlyLate``1(System.Func{`0,NMF.Expressions.IEnumerableExpression{``0}},System.Func{`1,System.Collections.Generic.ICollection{``0}},System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            Synchronizes the dependent values but only left to right
+            </summary>
+            <typeparam name="TValue">The type of values</typeparam>
+            <param name="leftSelector">The LHS in-model lens</param>
+            <param name="rightSelector">The RHS in-model lens</param>
+            <param name="guard">A guard condition or null</param>
+        </member>
+        <member name="M:NMF.Synchronizations.SynchronizationRule`2.SynchronizeManyRightToLeftOnly``1(System.Func{`0,System.Collections.Generic.ICollection{``0}},System.Func{`1,NMF.Expressions.IEnumerableExpression{``0}})">
+            <summary>
+            Synchronizes the dependent values but only left to right
+            </summary>
+            <typeparam name="TValue">The type of values</typeparam>
+            <param name="leftSelector">The LHS in-model lens</param>
+            <param name="rightSelector">The RHS in-model lens</param>
+        </member>
+        <member name="M:NMF.Synchronizations.SynchronizationRule`2.SynchronizeManyRightToLefttOnly``1(System.Func{`0,System.Collections.Generic.ICollection{``0}},System.Func{`1,NMF.Expressions.IEnumerableExpression{``0}},System.Linq.Expressions.Expression{System.Func{`1,System.Boolean}})">
+            <summary>
+            Synchronizes the dependent values but only left to right
+            </summary>
+            <typeparam name="TValue">The type of values</typeparam>
+            <param name="leftSelector">The LHS in-model lens</param>
+            <param name="rightSelector">The RHS in-model lens</param>
+            <param name="guard">A guard condition or null</param>
+        </member>
+        <member name="M:NMF.Synchronizations.SynchronizationRule`2.SynchronizeManyRightToLeftOnlyLate``1(System.Func{`0,System.Collections.Generic.ICollection{``0}},System.Func{`1,NMF.Expressions.IEnumerableExpression{``0}})">
+            <summary>
+            Synchronizes the dependent values but only left to right
+            </summary>
+            <typeparam name="TValue">The type of values</typeparam>
+            <param name="leftSelector">The LHS in-model lens</param>
+            <param name="rightSelector">The RHS in-model lens</param>
+        </member>
+        <member name="M:NMF.Synchronizations.SynchronizationRule`2.SynchronizeManyRightToLeftOnlyLate``1(System.Func{`0,System.Collections.Generic.ICollection{``0}},System.Func{`1,NMF.Expressions.IEnumerableExpression{``0}},System.Linq.Expressions.Expression{System.Func{`1,System.Boolean}})">
+            <summary>
+            Synchronizes the dependent values but only left to right
+            </summary>
+            <typeparam name="TValue">The type of values</typeparam>
+            <param name="leftSelector">The LHS in-model lens</param>
+            <param name="rightSelector">The RHS in-model lens</param>
+            <param name="guard">A guard condition or null</param>
+        </member>
+        <member name="M:NMF.Synchronizations.SynchronizationRule`2.SynchronizeLeftToRightOnly``1(System.Linq.Expressions.Expression{System.Func{`0,``0}},System.Linq.Expressions.Expression{System.Func{`1,``0}})">
+            <summary>
+            Synchronizes the dependent values but only left to right
+            </summary>
+            <typeparam name="TValue">The type of the values</typeparam>
+            <param name="leftSelector">The LHS in-model lens</param>
+            <param name="rightSelector">The RHS in-model lens</param>
+        </member>
+        <member name="M:NMF.Synchronizations.SynchronizationRule`2.SynchronizeLeftToRightOnly``1(System.Linq.Expressions.Expression{System.Func{`0,``0}},System.Action{`1,``0})">
+            <summary>
+            Synchronizes the dependent values but only left to right
+            </summary>
+            <typeparam name="TValue">The type of the values</typeparam>
+            <param name="leftSelector">The LHS in-model lens</param>
+            <param name="rightSetter">A RHS setter</param>
+        </member>
+        <member name="M:NMF.Synchronizations.SynchronizationRule`2.SynchronizeLateLeftToRightOnly``1(System.Linq.Expressions.Expression{System.Func{`0,``0}},System.Linq.Expressions.Expression{System.Func{`1,``0}})">
+            <summary>
+            Synchronizes the dependent values but only left to right
+            </summary>
+            <typeparam name="TValue">The type of the values</typeparam>
+            <param name="leftSelector">The LHS in-model lens</param>
+            <param name="rightSelector">The RHS in-model lens</param>
+        </member>
+        <member name="M:NMF.Synchronizations.SynchronizationRule`2.SynchronizeLateLeftToRightOnly``1(System.Linq.Expressions.Expression{System.Func{`0,``0}},System.Action{`1,``0})">
+            <summary>
+            Synchronizes the dependent values but only left to right
+            </summary>
+            <typeparam name="TValue">The type of the values</typeparam>
+            <param name="leftSelector">The LHS in-model lens</param>
+            <param name="rightSetter">A RHS setter</param>
+        </member>
+        <member name="M:NMF.Synchronizations.SynchronizationRule`2.SynchronizeLeftToRightOnly``1(System.Linq.Expressions.Expression{System.Func{`0,``0}},System.Linq.Expressions.Expression{System.Func{`1,``0}},System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            Synchronizes the dependent values but only left to right
+            </summary>
+            <typeparam name="TValue">The type of the values</typeparam>
+            <param name="leftSelector">The LHS in-model lens</param>
+            <param name="rightSelector">The RHS in-model lens</param>
+            <param name="guard">A guard condition or null</param>
+        </member>
+        <member name="M:NMF.Synchronizations.SynchronizationRule`2.SynchronizeLeftToRightOnly``1(System.Linq.Expressions.Expression{System.Func{`0,``0}},System.Action{`1,``0},System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            Synchronizes the dependent values but only left to right
+            </summary>
+            <typeparam name="TValue">The type of the values</typeparam>
+            <param name="leftSelector">The LHS in-model lens</param>
+            <param name="rightSetter">A RHS setter</param>
+            <param name="guard">A guard condition or null</param>
+        </member>
+        <member name="M:NMF.Synchronizations.SynchronizationRule`2.SynchronizeRightToLeftOnly``1(System.Linq.Expressions.Expression{System.Func{`0,``0}},System.Linq.Expressions.Expression{System.Func{`1,``0}})">
+            <summary>
+            Synchronizes the dependent values but only right to left
+            </summary>
+            <typeparam name="TValue">The type of the values</typeparam>
+            <param name="leftSelector">The LHS in-model lens</param>
+            <param name="rightSelector">The RHS in-model lens</param>
+        </member>
+        <member name="M:NMF.Synchronizations.SynchronizationRule`2.SynchronizeRightToLeftOnly``1(System.Action{`0,``0},System.Linq.Expressions.Expression{System.Func{`1,``0}})">
+            <summary>
+            Synchronizes the dependent values but only right to left
+            </summary>
+            <typeparam name="TValue">The type of the values</typeparam>
+            <param name="leftSetter">A LHS setter</param>
+            <param name="rightSelector">The RHS in-model lens</param>
+        </member>
+        <member name="M:NMF.Synchronizations.SynchronizationRule`2.SynchronizeLateRightToLeftOnly``1(System.Linq.Expressions.Expression{System.Func{`0,``0}},System.Linq.Expressions.Expression{System.Func{`1,``0}})">
+            <summary>
+            Synchronizes the dependent values but only right to left
+            </summary>
+            <typeparam name="TValue">The type of the values</typeparam>
+            <param name="leftSelector">The LHS in-model lens</param>
+            <param name="rightSelector">The RHS in-model lens</param>
+        </member>
+        <member name="M:NMF.Synchronizations.SynchronizationRule`2.SynchronizeLateRightToLeftOnly``1(System.Action{`0,``0},System.Linq.Expressions.Expression{System.Func{`1,``0}})">
+            <summary>
+            Synchronizes the dependent values but only right to left
+            </summary>
+            <typeparam name="TValue">The type of the values</typeparam>
+            <param name="leftSetter">A LHS setter</param>
+            <param name="rightSelector">The RHS in-model lens</param>
+        </member>
+        <member name="M:NMF.Synchronizations.SynchronizationRule`2.SynchronizeRightToLeftOnly``1(System.Linq.Expressions.Expression{System.Func{`0,``0}},System.Linq.Expressions.Expression{System.Func{`1,``0}},System.Linq.Expressions.Expression{System.Func{`1,System.Boolean}})">
+            <summary>
+            Synchronizes the dependent values but only right to left
+            </summary>
+            <typeparam name="TValue">The type of the values</typeparam>
+            <param name="leftSelector">The LHS in-model lens</param>
+            <param name="rightSelector">The RHS in-model lens</param>
+            <param name="guard">A guard condition or null</param>
+        </member>
+        <member name="M:NMF.Synchronizations.SynchronizationRule`2.SynchronizeRightToLeftOnly``1(System.Action{`0,``0},System.Linq.Expressions.Expression{System.Func{`1,``0}},System.Linq.Expressions.Expression{System.Func{`1,System.Boolean}})">
+            <summary>
+            Synchronizes the dependent values but only right to left
+            </summary>
+            <typeparam name="TValue">The type of the values</typeparam>
+            <param name="leftSetter">A LHS setter</param>
+            <param name="rightSelector">The RHS in-model lens</param>
+            <param name="guard">A guard condition or null</param>
+        </member>
+        <member name="M:NMF.Synchronizations.SynchronizationRule`2.SynchronizeOpaque(System.Func{`0,`1,NMF.Synchronizations.SynchronizationDirection,NMF.Synchronizations.ISynchronizationContext,System.IDisposable},System.Boolean)">
+            <summary>
+            Executes the given action when a correspondence between LHS and RHS elements is established
+            </summary>
+            <param name="action">The action to perform</param>
+            <param name="isEarly">True, if the synchronization job should be performed before dependencies, otherwise False</param>
+        </member>
+        <member name="M:NMF.Synchronizations.SynchronizationRule`2.SynchronizeOpaque(System.Action{`0,`1,NMF.Synchronizations.SynchronizationDirection,NMF.Synchronizations.ISynchronizationContext},System.Boolean)">
+            <summary>
+            Executes the given action when a correspondence between LHS and RHS elements is established
+            </summary>
+            <param name="action">The action to perform</param>
+            <param name="isEarly">True, if the synchronization job should be performed before dependencies, otherwise False</param>
+        </member>
+        <member name="M:NMF.Synchronizations.SynchronizationRule`2.CreateRightOutput(`0,System.Collections.Generic.IEnumerable{`1},NMF.Synchronizations.ISynchronizationContext,System.Boolean@)">
+            <summary>
+            Creates the RHS output
+            </summary>
+            <param name="input">The corresponding LHS element</param>
+            <param name="candidates">Candidates for the RHS element or null</param>
+            <param name="context">The synchronization context</param>
+            <param name="existing">True, if an existing element is returned, otherwise False</param>
+            <returns>The RHS element</returns>
+        </member>
+        <member name="M:NMF.Synchronizations.SynchronizationRule`2.CreateLeftOutput(`1,System.Collections.Generic.IEnumerable{`0},NMF.Synchronizations.ISynchronizationContext,System.Boolean@)">
+            <summary>
+            Creates the LHS output
+            </summary>
+            <param name="input">The corresponding RHS element</param>
+            <param name="candidates">Candidates for the LHS element or null</param>
+            <param name="context">The synchronization context</param>
+            <param name="existing">True, if an existing element is returned, otherwise False</param>
+            <returns>The LHS element</returns>
+        </member>
+        <member name="M:NMF.Synchronizations.SynchronizationRule`2.SynchronizeCollectionsRightToLeft(System.Collections.Generic.ICollection{`0},System.Collections.Generic.ICollection{`1},NMF.Synchronizations.ISynchronizationContext,System.Boolean)">
+            <summary>
+            Synchronizes collections of LHS and RHS elements in the direction rights to lefts
+            </summary>
+            <param name="lefts">The left elements</param>
+            <param name="rights">The right elements</param>
+            <param name="context">The synchronization context</param>
+            <param name="ignoreCandidates">True, if candidates can be ignored, otherwise false</param>
+        </member>
+        <member name="M:NMF.Synchronizations.SynchronizationRule`2.SynchronizeCollectionsLeftToRight(System.Collections.Generic.ICollection{`1},System.Collections.Generic.ICollection{`0},NMF.Synchronizations.ISynchronizationContext,System.Boolean)">
+            <summary>
+            Synchronizes collections of LHS and RHS elements in the direction lefts to rights
+            </summary>
+            <param name="lefts">The left elements</param>
+            <param name="rights">The right elements</param>
+            <param name="context">The synchronization context</param>
+            <param name="ignoreCandidates">True, if candidates can be ignored, otherwise false</param>
+        </member>
+        <member name="M:NMF.Synchronizations.SynchronizationRule`2.MarkInstantiatingFor(NMF.Synchronizations.SynchronizationRuleBase,System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}},System.Linq.Expressions.Expression{System.Func{`1,System.Boolean}})">
+            <summary>
+            Marks this synchronization rule instantiating for the given other synchronization rule
+            </summary>
+            <param name="synchronizationRule">The other synchronization rule with more abstract LHS and RHS types</param>
+            <param name="leftPredicate">A filter function on the LHS when this instantiation applies or null</param>
+            <param name="rightPredicate">A filter function on the RHS when this instantiation applies or null</param>
+        </member>
+        <member name="T:NMF.Synchronizations.SynchronizationRuleBase">
+            <summary>
+            Denotes an abstract synchronization rule
+            </summary>
+        </member>
+        <member name="M:NMF.Synchronizations.SynchronizationRuleBase.#ctor">
+            <summary>
+            Creates a new instance
+            </summary>
+        </member>
+        <member name="P:NMF.Synchronizations.SynchronizationRuleBase.LeftType">
+            <summary>
+            Gets the LHS type of the synchronization rule
+            </summary>
+        </member>
+        <member name="P:NMF.Synchronizations.SynchronizationRuleBase.RightType">
+            <summary>
+            Gets the RHS type of the synchronization rule
+            </summary>
+        </member>
+        <member name="M:NMF.Synchronizations.SynchronizationRuleBase.DeclareSynchronization">
+            <summary>
+            Declares the jobs and synchronization blocks that make up the synchronization rule
+            </summary>
+        </member>
+        <member name="P:NMF.Synchronizations.SynchronizationRuleBase.Synchronization">
+            <summary>
+            Gets the context synchronization
+            </summary>
+        </member>
+        <member name="M:NMF.Synchronizations.SynchronizationRuleBase.SyncRule``1">
+            <summary>
+            Gets the synchroniation rule of the given type
+            </summary>
+            <typeparam name="TRule">The type of the synchronization rule</typeparam>
+            <returns>The synchronization rule instance of the given type or null, if no such rule exists</returns>
+        </member>
+        <member name="M:NMF.Synchronizations.SynchronizationRuleBase.Rule``1">
+            <summary>
+            Gets the transformation rule type of the given type
+            </summary>
+            <typeparam name="TRule">The type of the transformation rule</typeparam>
+            <returns>The transformation rule instance of the given type or null, if no such rule exists</returns>
+        </member>
+    </members>
+</doc>

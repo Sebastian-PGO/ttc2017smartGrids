@@ -3,7 +3,10 @@
     "OutageDetection",
     "OutagePrevention"
   ],
-  "Tools": ["NMF", "NMF (batch)", "eMoflon", "ModelJoin"],
+  "Tools": [
+  	"NMF",
+  	"NMF (batch)"
+  ],
   "ChangeSets": [
     "changeSequence1", "changeSequence2"
   ],
