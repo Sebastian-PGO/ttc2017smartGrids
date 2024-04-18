@@ -6,7 +6,6 @@
     <AssemblyName>NMFSolution</AssemblyName>
     <RootNamespace>TTC2017.SmartGrids</RootNamespace>
     <AppendTargetFrameworkToOutputPath>true</AppendTargetFrameworkToOutputPath>
-    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
   </PropertyGroup>
 
   <ItemGroup>
