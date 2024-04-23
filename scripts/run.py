@@ -8,12 +8,12 @@ import os
 import shutil
 import subprocess
 import sys
-import ConfigParser
+import configparser
 import json
 from subprocess import CalledProcessError
 
 BASE_DIRECTORY = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-print "Running benchmark with root directory " + BASE_DIRECTORY
+print("Running benchmark with root directory " + BASE_DIRECTORY)
 
 class JSONObject(object):
     def __init__(self, d):
@@ -25,7 +25,7 @@ def build(conf, skip_tests=False):
     Builds all solutions
     """
     for tool in conf.Tools:
-        config = ConfigParser.ConfigParser()
+        config = configparser.ConfigParser()
         config.read(os.path.join(BASE_DIRECTORY, "solutions", tool, "solution.ini"))
         set_working_directory("solutions", tool)
         if skip_tests:
@@ -69,7 +69,7 @@ def benchmark(conf):
     for r in range(0, conf.Runs):
         os.environ['RunIndex'] = str(r)
         for tool in conf.Tools:
-            config = ConfigParser.ConfigParser()
+            config = configparser.ConfigParser()
             config.read(os.path.join(BASE_DIRECTORY, "solutions", tool, "solution.ini"))
             set_working_directory("solutions", tool)
             os.environ['Tool'] = tool
